@@ -23,4 +23,7 @@ public class Contact {
     @Pattern(regexp = "(^$|[0-9]{10})")
     String telephone;
 
+    @ManyToOne
+    UserCredential user;
+
 }

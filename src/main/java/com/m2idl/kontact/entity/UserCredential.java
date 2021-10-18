@@ -12,7 +12,7 @@ public class UserCredential {
     @NotBlank()
     String password;
 
-    @OneToMany
+    @OneToMany(mappedBy="user")
     List<Contact> contacts;
 
 }
