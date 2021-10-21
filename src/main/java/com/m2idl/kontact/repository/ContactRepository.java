@@ -7,5 +7,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ContactRepository extends JpaRepository<Contact, Integer>{}
+public interface ContactRepository extends JpaRepository<Contact, Integer>{
+
+boolean existsContactById(int id);
+
+
+}
 
