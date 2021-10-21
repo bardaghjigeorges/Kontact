@@ -25,14 +25,18 @@ public class UserCredentialController {
 
     @RequestMapping("/index/user/{email}/{password}")
     public String findUserOptional(@PathVariable String email, @PathVariable String password, Model model ){
+        // utilisation de l'interface userCredentialService
         Optional<UserCredential> userCredential = userCredentialService.findOptionalUserByEmailAndPassword(email, password);
+        // Mettre la valeur de l'utilsateur recuperé dans un attribut model pour pouvoir l'affiché après dans la view
         model.addAttribute( "nom_du_model_dans_la_vue", userCredential);
         return "view";
     }
 
     @RequestMapping("/index/user/{email}/{password}")
     public String findUser(@PathVariable String email, @PathVariable String password, Model model){
+        // utilisation de l'interface userCredentialService
         UserCredential userCredential = userCredentialService.getUserByEmailAndPassword(email, password);
+        // Mettre la valeur de l'utilsateur recuperé dans un attribut model pour pouvoir l'affiché après dans la view
         model.addAttribute("nom_du_model_dans_la_vue", userCredential);
         return "view";
     }
