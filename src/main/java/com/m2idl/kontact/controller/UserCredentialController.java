@@ -66,8 +66,8 @@ public class UserCredentialController {
         return allContacts;
     }
 
-    @RequestMapping("/index/user/contact/{id}")
-    public void deleteContact(@PathVariable String id, UserCredential userCredential, Contact contact){
+    @DeleteMapping("/index/user/contact/{id}")
+    public void deleteContact(UserCredential userCredential, Contact contact){
         userCredentialService.deleteContact(userCredential, contact);
     }
 
