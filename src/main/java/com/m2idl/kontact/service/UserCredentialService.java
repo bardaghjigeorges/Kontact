@@ -17,8 +17,8 @@ public interface UserCredentialService {
 
     boolean userExistsByEmail(String email);
 
-    List<Contact> getContactsOfUser(String email);
+    UserCredential getUserByEmail(String email);
 
-    void deleteContactOfUser(String email, Contact contact);
+    List<Contact> getContactsOfUser(String email);
 
 }

@@ -9,7 +9,8 @@ public interface ContactService {
 
     Contact addContact(Contact contact);
 
-    Contact updateContact(Contact contact) throws Exception;
+    Contact updateContact(Contact contact, int id) throws Exception;
 
-    void deleteContact(Contact contact);
+    Contact getContact(int id);
+    void deleteContact(int id);
 }

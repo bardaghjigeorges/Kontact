@@ -8,9 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface UserCredentialRepository extends JpaRepository<UserCredential, String> {
- Optional<UserCredential> findUserCredentialByMailAndPassword(String mail, String password );
- UserCredential getUserCredentialByMailAndPassword(String mail , String password);
- Boolean existsUserCredentialByMail(String mail);
- UserCredential getUserCredentialByMail(String mail);
+ Optional<UserCredential> findUserCredentialByEmailAndPassword(String mail, String password );
+ UserCredential getUserCredentialByEmailAndPassword(String mail , String password);
+ Boolean existsUserCredentialByEmail(String mail);
+ UserCredential getUserCredentialByEmail(String mail);
 
 }

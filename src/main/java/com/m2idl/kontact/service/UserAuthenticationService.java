@@ -19,9 +19,8 @@ public class UserAuthenticationService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
         try{
-
             UserCredential user = userCredentialService.getUserByEmail(mail);
-            return new User(user.getMail(), user.getPassword(), new ArrayList<>());
+            return new User(user.getEmail(), user.getPassword(), new ArrayList<>());
         } catch (Exception e ){
             throw new UsernameNotFoundException("User : "+mail+" not found");
         }

@@ -28,9 +28,7 @@ public class Contact {
     @Size(min = 10, max = 10)
     @Pattern(regexp = "(^$|[0-9]{10})")
     String telephone;
- 
-  @ManyToOne
-    UserCredential user;
+
 
     @Override
     public boolean equals(Object o) {

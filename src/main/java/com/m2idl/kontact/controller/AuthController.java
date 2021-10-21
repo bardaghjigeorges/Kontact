@@ -19,10 +19,11 @@ public class AuthController {
     @PostMapping("/register")
     public String register(UserCredential userCredential){
         try{
+            System.out.println(userCredential);
             userCredentialService.addUser(userCredential);
-            ModelAndView modelAndView = new ModelAndView("register");
         }
         catch (Exception e){
+            e.printStackTrace();
             return "register";
         }
         return "redirect:home";
