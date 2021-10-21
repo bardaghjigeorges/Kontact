@@ -14,9 +14,9 @@
             <label for="password">Mot de passe</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="Password">
         </div>
-        <small><a href="${register}">Register</a></small>
+        <small><a href="${register}">S'inscrire</a></small>
         <sec:csrfInput />
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Valider</button>
 
     </fieldset>
 </form>
