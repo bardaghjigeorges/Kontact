@@ -28,6 +28,9 @@ public class Contact {
     @Size(min = 10, max = 10)
     @Pattern(regexp = "(^$|[0-9]{10})")
     String telephone;
+ 
+  @ManyToOne
+    UserCredential user;
 
     @Override
     public boolean equals(Object o) {
@@ -37,8 +40,8 @@ public class Contact {
         return Objects.equals(firstName, contact.firstName) && Objects.equals(lastName, contact.lastName) && Objects.equals(telephone, contact.telephone);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstName, lastName, telephone);
-    }
+   
+  
+
+
 }
