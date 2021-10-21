@@ -13,12 +13,12 @@ public interface UserCredentialService {
 
     UserCredential getUserByEmailAndPassword (String mail, String password);
 
-    void addContactToUser(UserCredential user, Contact contact);
+    void addContactToUser(String mail, Contact contact);
 
     boolean userExistsByEmail(String email);
 
     List<Contact> getContactsOfUser(String email);
 
-    void deleteContact(UserCredential user, Contact contact);
+    void deleteContactOfUser(String email, Contact contact);
 
 }

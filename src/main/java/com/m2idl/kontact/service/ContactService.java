@@ -9,7 +9,7 @@ public interface ContactService {
 
     Contact addContact(Contact contact);
 
-    Contact updateContact(Contact contact);
+    Contact updateContact(Contact contact) throws Exception;
 
     void deleteContact(Contact contact);
 }
