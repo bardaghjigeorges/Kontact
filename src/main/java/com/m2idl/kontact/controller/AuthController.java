@@ -19,14 +19,12 @@ public class AuthController {
     @PostMapping("/register")
     public String register(UserCredential userCredential){
         try{
-            System.out.println(userCredential);
             userCredentialService.addUser(userCredential);
         }
         catch (Exception e){
-            e.printStackTrace();
             return "register";
         }
-        return "redirect:home";
+        return "redirect:/home";
     }
 
     @GetMapping("/register")
@@ -34,9 +32,10 @@ public class AuthController {
         return "register";
     }
 
-    @GetMapping("/loginPage")
-    public String login(){
-        return "login";
+    @GetMapping(path="/loginPage")
+    public ModelAndView login(){
+
+        return new ModelAndView("login");
     }
 
     @GetMapping(path = "/logout")
