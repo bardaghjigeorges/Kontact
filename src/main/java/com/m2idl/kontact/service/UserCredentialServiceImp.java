@@ -27,6 +27,14 @@ public class UserCredentialServiceImp implements UserCredentialService {
         return userCredential;
     }
 
+    @Override
+    public UserCredential update(UserCredential userCredential) throws Exception {
+        if(! userExistsByEmail(userCredential.getEmail())){
+            throw new Exception();
+        }
+        return userCredentialRepository.save(userCredential);
+    }
+
 
     public Optional<UserCredential> findOptionalUserByEmailAndPassword(String email, String password) {
         Optional<UserCredential> u = userCredentialRepository.findUserCredentialByEmailAndPassword(email, password);
@@ -60,8 +68,16 @@ public class UserCredentialServiceImp implements UserCredentialService {
     @Transactional
     public List<Contact> getContactsOfUser(String email) {
         UserCredential u = userCredentialRepository.getUserCredentialByEmail(email);
-        u.getContacts();
         return u.getContacts();
+    }
+
+    @Override
+    @Transactional
+    public void deleteContactOfUser(String email, int idContact) throws Exception {
+        UserCredential userCredential = getUserByEmail(email);
+        Contact contact = userCredential.getContacts().stream().filter(c -> c.getId() == idContact ).findFirst().orElseThrow(Exception::new);
+        userCredential.getContacts().remove(contact);
+        update(userCredential);
     }
 
 }

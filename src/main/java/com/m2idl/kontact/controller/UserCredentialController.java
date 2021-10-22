@@ -40,23 +40,29 @@ public class UserCredentialController {
         return modelAndView ;
     }
 
-    @PutMapping("/contact/edit/{id}")
-    public ModelAndView postContactEdit(@PathVariable(value = "id") int id,@RequestBody Contact contact) throws Exception {
+    @PostMapping("/contact/edit/{id}")
+    public ModelAndView putContactEdit(@PathVariable(value = "id") int id, @ModelAttribute("contact") Contact contact) throws Exception {
         Contact newContact = contactService.updateContact(contact, id);
         ModelAndView modelAndView = new ModelAndView("contactEdit");
         modelAndView.addObject("contact", newContact);
         return modelAndView;
     }
 
-    @PostMapping("/addContact")
-    public String addAContactToUser(Principal principal, Contact contact ){
+    @PostMapping("contact/add")
+    public String addAContactToUser(Principal principal,@ModelAttribute("contact") Contact contact ){
         userCredentialService.addContactToUser(principal.getName(), contact);
-        return "redirect:home";
+        return "redirect:/home";
     }
 
-    @DeleteMapping("deleteContact/{id}")
-    public String deleteContact( @PathVariable(value = "id") int id ){
-        contactService.deleteContact(id);
-        return "redirect:home";
+    @GetMapping("contact/add")
+    public String addAContactToUser(Principal principal ){
+
+        return "contactAdding";
+    }
+
+    @GetMapping("contact/delete/{id}")
+    public String deleteContact( @PathVariable(value = "id") int id , Principal principal) throws Exception {
+        userCredentialService.deleteContactOfUser(principal.getName(), id);
+        return "redirect:/home";
     }
 }

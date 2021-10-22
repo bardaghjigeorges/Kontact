@@ -17,12 +17,13 @@ public class UserAuthenticationService implements UserDetailsService {
     UserCredentialService userCredentialService ;
 
     @Override
-    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         try{
-            UserCredential user = userCredentialService.getUserByEmail(mail);
+            System.out.println("logger : "+email);
+            UserCredential user = userCredentialService.getUserByEmail(email);
             return new User(user.getEmail(), user.getPassword(), new ArrayList<>());
         } catch (Exception e ){
-            throw new UsernameNotFoundException("User : "+mail+" not found");
+            throw new UsernameNotFoundException("User : "+email+" not found");
         }
     }
 }

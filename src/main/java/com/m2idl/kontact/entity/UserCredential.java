@@ -26,7 +26,7 @@ public class UserCredential {
     @NotBlank()
     String password;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     List<Contact> contacts = new ArrayList<>();
 
 }

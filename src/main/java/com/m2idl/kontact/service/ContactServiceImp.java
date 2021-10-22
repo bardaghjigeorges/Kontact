@@ -5,6 +5,7 @@ import com.m2idl.kontact.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ContactServiceImp implements ContactService {
@@ -36,8 +37,9 @@ public class ContactServiceImp implements ContactService {
     }
 
     @Override
+    @Transactional
     public void deleteContact(int id ) {
-
-        contactRepository.deleteById(id);
+        Contact contact = getContact(id);
+        contactRepository.delete(contact);
     }
 }
