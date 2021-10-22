@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -15,17 +16,17 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-
+@ToString
 @NoArgsConstructor
 
 public class UserCredential {
     @Id
-    String mail;
+    String email;
 
     @NotBlank()
     String password;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(cascade = CascadeType.ALL)
     List<Contact> contacts = new ArrayList<>();
 
 }

@@ -1,5 +1,5 @@
-<c:url var="contactsList" value="/contactsList"/>
-<c:url var="contactAdding" value="/contactAdding"/>
+<c:url var="contactsList" value="/home"/>
+<c:url var="contactAdding" value="/contact/add"/>
 <c:url var="login" value="/login"/>
 <c:url var="logout" value="/logout"/>
 
@@ -25,7 +25,7 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Mon Compte</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="${contactAdding}">Profil</a>
+                        <a class="dropdown-item" href="${contactAdding}">Ajouter Contact</a>
                         <a class="dropdown-item" href="${logout}">Logout</a>
                     </div>
                 </li>

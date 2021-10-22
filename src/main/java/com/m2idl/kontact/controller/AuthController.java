@@ -20,12 +20,11 @@ public class AuthController {
     public String register(UserCredential userCredential){
         try{
             userCredentialService.addUser(userCredential);
-            ModelAndView modelAndView = new ModelAndView("register");
         }
         catch (Exception e){
             return "register";
         }
-        return "redirect:home";
+        return "redirect:/home";
     }
 
     @GetMapping("/register")
@@ -33,9 +32,10 @@ public class AuthController {
         return "register";
     }
 
-    @GetMapping("/loginPage")
-    public String login(){
-        return "login";
+    @GetMapping(path="/loginPage")
+    public ModelAndView login(){
+
+        return new ModelAndView("login");
     }
 
     @GetMapping(path = "/logout")

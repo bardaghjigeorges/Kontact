@@ -9,6 +9,8 @@ public interface UserCredentialService {
 
     UserCredential addUser(UserCredential userCredential);
 
+    UserCredential update(UserCredential userCredential) throws Exception;
+
     Optional<UserCredential> findOptionalUserByEmailAndPassword(String email, String password);
 
     UserCredential getUserByEmailAndPassword (String mail, String password);
@@ -17,8 +19,10 @@ public interface UserCredentialService {
 
     boolean userExistsByEmail(String email);
 
+    UserCredential getUserByEmail(String email);
+
     List<Contact> getContactsOfUser(String email);
 
-    void deleteContactOfUser(String email, Contact contact);
+    void deleteContactOfUser(String email, int idContact) throws Exception;
 
 }

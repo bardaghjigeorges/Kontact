@@ -3,9 +3,10 @@ package com.m2idl.kontact.service;
 import com.m2idl.kontact.entity.Contact;
 import com.m2idl.kontact.entity.UserCredential;
 import com.m2idl.kontact.repository.UserCredentialRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -14,49 +15,69 @@ import java.util.Optional;
 public class UserCredentialServiceImp implements UserCredentialService {
 
     @Autowired
-    UserCredentialRepository ucr;
-
+    UserCredentialRepository userCredentialRepository;
+    @Autowired
+    ContactService contactService ;
+    @Autowired
+    PasswordEncoder passwordEncoder ;
 
     public UserCredential addUser(UserCredential userCredential) {
-        ucr.save(userCredential);
+        userCredential.setPassword(passwordEncoder.encode(userCredential.getPassword()));
+        userCredentialRepository.save(userCredential);
         return userCredential;
+    }
+
+    @Override
+    public UserCredential update(UserCredential userCredential) throws Exception {
+        if(! userExistsByEmail(userCredential.getEmail())){
+            throw new Exception();
+        }
+        return userCredentialRepository.save(userCredential);
     }
 
 
     public Optional<UserCredential> findOptionalUserByEmailAndPassword(String email, String password) {
-        Optional<UserCredential> u = ucr.findUserCredentialByMailAndPassword(email, password);
+        Optional<UserCredential> u = userCredentialRepository.findUserCredentialByEmailAndPassword(email, password);
         return u;
     }
 
 
     public UserCredential getUserByEmailAndPassword(String mail, String password) {
-        return ucr.getUserCredentialByMailAndPassword(mail, password);
+        return userCredentialRepository.getUserCredentialByEmailAndPassword(mail, password);
     }
 
     @Transactional
     public void addContactToUser(String mail, Contact contact){
-       UserCredential user= ucr.getUserCredentialByMail(mail);
+       UserCredential user= userCredentialRepository.getUserCredentialByEmail(mail);
        user.getContacts().add(contact);
-       ucr.save(user);
+       userCredentialRepository.save(user);
 
 }
 
-    @java.lang.Override
+    @Override
     public boolean userExistsByEmail(String email) {
-        return ucr.existsUserCredentialByMail(email);
+        return userCredentialRepository.existsUserCredentialByEmail(email);
     }
 
-    @java.lang.Override
+    @Override
+    public UserCredential getUserByEmail(String email) {
+        return userCredentialRepository.getUserCredentialByEmail(email);
+    }
+
+    @Override
+    @Transactional
     public List<Contact> getContactsOfUser(String email) {
-        UserCredential u = ucr.getUserCredentialByMail(email);
+        UserCredential u = userCredentialRepository.getUserCredentialByEmail(email);
         return u.getContacts();
     }
 
-    @java.lang.Override
-    public void deleteContactOfUser(String email, Contact contact) {
-        UserCredential user= ucr.getUserCredentialByMail(email);
-        List<Contact> list = user.getContacts();
-        list.stream().filter(contact::equals).forEach(list::remove);
-
+    @Override
+    @Transactional
+    public void deleteContactOfUser(String email, int idContact) throws Exception {
+        UserCredential userCredential = getUserByEmail(email);
+        Contact contact = userCredential.getContacts().stream().filter(c -> c.getId() == idContact ).findFirst().orElseThrow(Exception::new);
+        userCredential.getContacts().remove(contact);
+        update(userCredential);
     }
+
 }

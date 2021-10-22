@@ -25,34 +25,44 @@ public class UserCredentialController {
 
     @GetMapping("/home")
     public ModelAndView findUserOptional(Principal principal){
+        System.out.println("current user : "+principal.getName());
         List<Contact> contacts = userCredentialService.getContactsOfUser(principal.getName());
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("contact", contacts);
+        ModelAndView modelAndView = new ModelAndView("contactsList");
+        modelAndView.addObject("contacts", contacts);
         return modelAndView;
     }
 
-    @GetMapping("/contact/edit")
-    public String getContactEdit(){
-        //todo à completer
-        return "contactEdit";
+    @GetMapping("/contact/edit/{id}")
+    public ModelAndView getContactEdit(@PathVariable(value = "id") int id ){
+        Contact contact = contactService.getContact(id);
+        ModelAndView modelAndView = new ModelAndView("contactEdit");
+        modelAndView.addObject("contact", contact);
+        return modelAndView ;
     }
 
-    @PostMapping("/contact/edit")
-    public String postContactEdit(@RequestBody Contact contact){
-        //todo à completer
-        return "contactEdit";
+    @PostMapping("/contact/edit/{id}")
+    public ModelAndView putContactEdit(@PathVariable(value = "id") int id, @ModelAttribute("contact") Contact contact) throws Exception {
+        Contact newContact = contactService.updateContact(contact, id);
+        ModelAndView modelAndView = new ModelAndView("contactEdit");
+        modelAndView.addObject("contact", newContact);
+        return modelAndView;
     }
 
-    @PostMapping("/addContact")
-    public String addAContactToUser(Principal principal, Contact contact ){
-        //ajouter un contact à un user avec la userServiceCrednetial on ne renvoie pas de model on ajoute juste
+    @PostMapping("contact/add")
+    public String addAContactToUser(Principal principal,@ModelAttribute("contact") Contact contact ){
         userCredentialService.addContactToUser(principal.getName(), contact);
-        return "redirect:home";
+        return "redirect:/home";
     }
 
-    @DeleteMapping("deleteContact")
-    public String deleteContact(Principal principal, Contact contact){
-        userCredentialService.deleteContact(principal.getName(), contact);
-        return "redirect:home";
+    @GetMapping("contact/add")
+    public String addAContactToUser(Principal principal ){
+
+        return "contactAdding";
+    }
+
+    @GetMapping("contact/delete/{id}")
+    public String deleteContact( @PathVariable(value = "id") int id , Principal principal) throws Exception {
+        userCredentialService.deleteContactOfUser(principal.getName(), id);
+        return "redirect:/home";
     }
 }

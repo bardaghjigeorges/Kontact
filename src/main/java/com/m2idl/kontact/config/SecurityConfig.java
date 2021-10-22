@@ -8,12 +8,12 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-@EnableGlobalMethodSecurity(prePostEnabled=true)
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    UserAuthenticationService userAuthenticationService ;
+    UserAuthenticationService userAuthenticationService;
 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userAuthenticationService);
@@ -21,12 +21,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests().anyRequest().authenticated()
+        http.authorizeRequests().antMatchers("/register", "/loginPage").permitAll()
                 .and()
-                .formLogin()
+                .authorizeRequests().anyRequest().authenticated()
                 .and()
-                .logout();
-    }
+                .formLogin().loginPage("/loginPage")
+                .and()
+                .logout()
+                .and()
+                .headers().frameOptions().disable();
 
+    }
 
 }

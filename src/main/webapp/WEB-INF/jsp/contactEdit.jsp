@@ -1,26 +1,26 @@
 <%@ include file="header.jsp" %>
-<c:url var="contactEdit" value="/user/contact/edit"/>
+<c:url var="contactEdit" value="/contact/edit"/>
 
 <h2>Modifier le contact</h2>
 
-<form:form method="POST" action="${contactEdit}" modelAttribute="contact">
+<form:form method="POST" action="${contactEdit}/${contact.id}" modelAttribute="contact">
     <fieldset>
 
         <div class="form-group">
-            <label for="firstname">Firstname</label>
-            <input type="text" class="form-control" id="firstname" name="firstname" value="${user.contact.firstname}">
-            <form:errors path="firstname" element="div" cssClass="alert-danger"/>
+            <label for="firstName">FirstName</label>
+            <input type="text" class="form-control" id="firstName" name="firstName" value="${contact.firstName}">
+            <form:errors path="firstName" element="div" cssClass="alert-danger"/>
         </div>
 
         <div class="form-group">
-            <label for="lastname">Lastname</label>
-            <input type="text" class="form-control" id="lastname" name="lastname" value="${user.contact.lastname}">
-            <form:errors path="lastname" element="div" cssClass="alert-danger"/>
+            <label for="lastName">LastName</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" value="${contact.lastName}">
+            <form:errors path="lastName" element="div" cssClass="alert-danger"/>
         </div>
 
         <div class="form-group row">
-            <label for="telephone">Group</label>
-            <input type="text" class="form-control" id="telephone" name="telephone" value="${user.contact.telepone}">
+            <label for="telephone">Telephone</label>
+            <input type="text" class="form-control" id="telephone" name="telephone" value="${contact.telephone}">
             <form:errors path="telephone" element="div" cssClass="alert-danger"/>
         </div>
 
