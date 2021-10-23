@@ -16,8 +16,10 @@ public class UserCredentialServiceImp implements UserCredentialService {
 
     @Autowired
     UserCredentialRepository userCredentialRepository;
+
     @Autowired
     ContactService contactService ;
+
     @Autowired
     PasswordEncoder passwordEncoder ;
 
@@ -28,7 +30,7 @@ public class UserCredentialServiceImp implements UserCredentialService {
     }
 
     @Override
-    public UserCredential update(UserCredential userCredential) throws Exception {
+    public UserCredential updateUser(UserCredential userCredential) throws Exception {
         if(! userExistsByEmail(userCredential.getEmail())){
             throw new Exception();
         }
@@ -37,8 +39,7 @@ public class UserCredentialServiceImp implements UserCredentialService {
 
 
     public Optional<UserCredential> findOptionalUserByEmailAndPassword(String email, String password) {
-        Optional<UserCredential> u = userCredentialRepository.findUserCredentialByEmailAndPassword(email, password);
-        return u;
+        return userCredentialRepository.findUserCredentialByEmailAndPassword(email, password);
     }
 
 
@@ -48,11 +49,27 @@ public class UserCredentialServiceImp implements UserCredentialService {
 
     @Transactional
     public void addContactToUser(String mail, Contact contact){
-       UserCredential user= userCredentialRepository.getUserCredentialByEmail(mail);
-       user.getContacts().add(contact);
-       userCredentialRepository.save(user);
+        if(! userContainsContact(mail, contact)){
+            UserCredential user= userCredentialRepository.getUserCredentialByEmail(mail);
+            user.getContacts().add(contact);
+            userCredentialRepository.save(user);
+        }
 
 }
+
+    @Override
+    public void updateContactToUser(String mail, Contact contact, int id) throws Exception {
+        if(!userContainsContact(mail, contact)){
+            contactService.updateContact(contact, id);
+        }
+    }
+
+    @Override
+    @Transactional
+    public boolean userContainsContact(String email, Contact contact) {
+        UserCredential userCredential = getUserByEmail(email);
+        return userCredential.getContacts().stream().anyMatch(contact::equals);
+    }
 
     @Override
     public boolean userExistsByEmail(String email) {
@@ -77,7 +94,7 @@ public class UserCredentialServiceImp implements UserCredentialService {
         UserCredential userCredential = getUserByEmail(email);
         Contact contact = userCredential.getContacts().stream().filter(c -> c.getId() == idContact ).findFirst().orElseThrow(Exception::new);
         userCredential.getContacts().remove(contact);
-        update(userCredential);
+        updateUser(userCredential);
     }
 
 }
