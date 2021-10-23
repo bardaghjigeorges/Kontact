@@ -8,7 +8,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import org.junit.Assert;
+
 import javax.transaction.Transactional;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -84,6 +88,14 @@ class KontactApplicationTests {
 		userCredential.setEmail("gounin@gounin.com");
 		userCredentialServiceImp.addUser(userCredential);
 		assertEquals(userCredentialServiceImp.getUserByEmail("gounin@gounin.com").getEmail(),"gounin@gounin.com");
+	}
+
+	@Test
+	@Transactional
+	void testGetContactsOfUser(){
+		List<Contact> listContacts=userCredentialServiceImp.getContactsOfUser("test@test.fr");
+
+		assertEquals(listContacts.isEmpty(),false);
 	}
 
 
