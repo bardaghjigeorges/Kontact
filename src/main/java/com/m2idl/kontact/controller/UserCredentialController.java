@@ -42,10 +42,15 @@ public class UserCredentialController {
 
     @PostMapping("/contact/edit/{id}")
     public ModelAndView putContactEdit(@PathVariable(value = "id") int id, @ModelAttribute("contact") Contact contact) throws Exception {
-        Contact newContact = contactService.updateContact(contact, id);
-        ModelAndView modelAndView = new ModelAndView("contactEdit");
-        modelAndView.addObject("contact", newContact);
-        return modelAndView;
+        try{
+            contactService.updateContact(contact, id);
+            return new ModelAndView("redirect:/home");
+        }
+        catch (Exception e){
+            ModelAndView modelAndView = new ModelAndView("contactEdit");
+            modelAndView.addObject("contact",contact);
+            return modelAndView;
+        }
     }
 
     @PostMapping("contact/add")
