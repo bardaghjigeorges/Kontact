@@ -41,7 +41,12 @@ class KontactApplicationTests {
 	}
 
 
-
+	@Test
+	@Transactional
+	void testGetContact(){
+		Contact contact= contactServiceImp.getContact(4);
+		assertEquals(contact.getFirstName(),"firstName3");
+	}
 
 
 
