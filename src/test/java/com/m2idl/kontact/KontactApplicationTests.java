@@ -31,6 +31,19 @@ class KontactApplicationTests {
 		assertEquals(expected, contact);
 	}
 
+	@Test
+	@Transactional
+	void testUpdateContact() throws Exception {
+		Contact contact = contactServiceImp.getContact(4);
+		contact.setLastName("doub");
+		contactServiceImp.updateContact(contact,4);
+		assertEquals(contact.getLastName(),"doub");
+	}
+
+
+
+
+
 
 
 
