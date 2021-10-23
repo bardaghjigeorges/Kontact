@@ -1,7 +1,9 @@
 package com.m2idl.kontact;
 
 import com.m2idl.kontact.entity.Contact;
+import com.m2idl.kontact.entity.UserCredential;
 import com.m2idl.kontact.service.ContactServiceImp;
+import com.m2idl.kontact.service.UserCredentialServiceImp;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +18,8 @@ class KontactApplicationTests {
 
 	@Autowired
 	ContactServiceImp contactServiceImp;
+	@Autowired
+	UserCredentialServiceImp userCredentialServiceImp;
 
 	@Test
 	@Transactional
@@ -48,6 +52,17 @@ class KontactApplicationTests {
 		assertEquals(contact.getFirstName(),"firstName3");
 	}
 
+
+	@Test
+	@Transactional
+	void addUser(){
+		UserCredential userCredential= new UserCredential();
+		userCredential.setPassword("111");
+		userCredential.setEmail("salem@salem.com");
+
+		userCredentialServiceImp.addUser(userCredential);
+		assertEquals(userCredentialServiceImp.getUserByEmail("salem@salem.com").getEmail(),"salem@salem.com");
+	}
 
 
 
