@@ -74,10 +74,17 @@ class KontactApplicationTests {
 		userCredentialServiceImp.addUser(userCredential);
 		assertEquals(userCredentialServiceImp.userExistsByEmail("doub@doub.com"),true);
 
-
 	}
 
-
+	@Test
+	@Transactional
+	void testGetUserByEmail(){
+		UserCredential userCredential= new UserCredential();
+		userCredential.setPassword("222");
+		userCredential.setEmail("gounin@gounin.com");
+		userCredentialServiceImp.addUser(userCredential);
+		assertEquals(userCredentialServiceImp.getUserByEmail("gounin@gounin.com").getEmail(),"gounin@gounin.com");
+	}
 
 
 
