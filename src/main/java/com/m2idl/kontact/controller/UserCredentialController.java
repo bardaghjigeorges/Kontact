@@ -28,7 +28,6 @@ public class UserCredentialController {
 
     @GetMapping("/home")
     public ModelAndView listContacts(Principal principal){
-        System.out.println("current user : "+principal.getName());
         List<Contact> contacts = userCredentialService.getContactsOfUser(principal.getName());
         ModelAndView modelAndView = new ModelAndView("contactsList");
         modelAndView.addObject("contacts", contacts);

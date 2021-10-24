@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import org.junit.Assert;
+import org.springframework.security.acls.model.AlreadyExistsException;
 
 import javax.transaction.Transactional;
 
@@ -59,7 +60,7 @@ class KontactApplicationTests {
 
 	@Test
 	@Transactional
-	void addUser() throws Exception {
+	void addUser() throws AlreadyExistsException {
 		UserCredential userCredential= new UserCredential();
 		userCredential.setPassword("111");
 		userCredential.setEmail("salem@salem.com");
@@ -70,7 +71,7 @@ class KontactApplicationTests {
 
 	@Test
 	@Transactional
-	void testUserExistsByEmail() throws Exception {
+	void testUserExistsByEmail() throws AlreadyExistsException {
 		UserCredential userCredential= new UserCredential();
 		userCredential.setPassword("222");
 		userCredential.setEmail("doub@doub.com");
@@ -82,7 +83,7 @@ class KontactApplicationTests {
 
 	@Test
 	@Transactional
-	void testGetUserByEmail() throws Exception {
+	void testGetUserByEmail() throws AlreadyExistsException {
 		UserCredential userCredential= new UserCredential();
 		userCredential.setPassword("222");
 		userCredential.setEmail("gounin@gounin.com");

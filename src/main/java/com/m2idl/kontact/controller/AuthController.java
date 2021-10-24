@@ -3,6 +3,7 @@ package com.m2idl.kontact.controller;
 import com.m2idl.kontact.entity.UserCredential;
 import com.m2idl.kontact.service.UserCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.acls.model.AlreadyExistsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ public class AuthController {
         try{
             userCredentialService.addUser(userCredential);
         }
-        catch (Exception e){
+        catch (AlreadyExistsException e){
             return "register";
         }
         return "redirect:/home";

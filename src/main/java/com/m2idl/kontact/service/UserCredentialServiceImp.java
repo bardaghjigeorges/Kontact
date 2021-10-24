@@ -4,6 +4,7 @@ import com.m2idl.kontact.entity.Contact;
 import com.m2idl.kontact.entity.UserCredential;
 import com.m2idl.kontact.repository.UserCredentialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.acls.model.AlreadyExistsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,9 @@ public class UserCredentialServiceImp implements UserCredentialService {
     @Autowired
     PasswordEncoder passwordEncoder ;
 
-    public UserCredential addUser(UserCredential userCredential) throws Exception {
+    public UserCredential addUser(UserCredential userCredential) throws AlreadyExistsException {
         if(userExistsByEmail(userCredential.getEmail())) {
-            System.out.println("user already exists");
-            throw new Exception();
+            throw new AlreadyExistsException("l'utilisateur existe deja.");
         }
         userCredential.setPassword(passwordEncoder.encode(userCredential.getPassword()));
         userCredentialRepository.save(userCredential);
