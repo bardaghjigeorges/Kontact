@@ -59,7 +59,7 @@ class KontactApplicationTests {
 
 	@Test
 	@Transactional
-	void addUser(){
+	void addUser() throws Exception {
 		UserCredential userCredential= new UserCredential();
 		userCredential.setPassword("111");
 		userCredential.setEmail("salem@salem.com");
@@ -70,7 +70,7 @@ class KontactApplicationTests {
 
 	@Test
 	@Transactional
-	void testUserExistsByEmail(){
+	void testUserExistsByEmail() throws Exception {
 		UserCredential userCredential= new UserCredential();
 		userCredential.setPassword("222");
 		userCredential.setEmail("doub@doub.com");
@@ -82,7 +82,7 @@ class KontactApplicationTests {
 
 	@Test
 	@Transactional
-	void testGetUserByEmail(){
+	void testGetUserByEmail() throws Exception {
 		UserCredential userCredential= new UserCredential();
 		userCredential.setPassword("222");
 		userCredential.setEmail("gounin@gounin.com");

@@ -23,7 +23,11 @@ public class UserCredentialServiceImp implements UserCredentialService {
     @Autowired
     PasswordEncoder passwordEncoder ;
 
-    public UserCredential addUser(UserCredential userCredential) {
+    public UserCredential addUser(UserCredential userCredential) throws Exception {
+        if(userExistsByEmail(userCredential.getEmail())) {
+            System.out.println("user already exists");
+            throw new Exception();
+        }
         userCredential.setPassword(passwordEncoder.encode(userCredential.getPassword()));
         userCredentialRepository.save(userCredential);
         return userCredential;
