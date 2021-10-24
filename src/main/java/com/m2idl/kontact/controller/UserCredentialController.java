@@ -48,7 +48,7 @@ public class UserCredentialController {
         if(errors.hasErrors()){
             model.addAttribute("org.springframework.validation.BindingResult.contact", errors);
             model.addAttribute("contact", contact);
-            return "redirect:/contact/edit/"+id;
+            return "contactEdit";
         }
         userCredentialService.updateContactToUser(principal.getName(), contact, id);
         return "redirect:/home";

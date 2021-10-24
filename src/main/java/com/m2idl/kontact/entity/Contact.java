@@ -28,7 +28,7 @@ public class Contact {
     @NotNull
     String lastName;
 
-    @Size(min = 10, max = 10)
+    @Size(min = 10, max = 10, message = "le numéro de telephone doit contenir 10 chiffres.")
     @Pattern(regexp = "(^$|[0-9]{10})", message = "le numéro ne doit contenir que des chiffres")
     @NotNull
     String telephone;
