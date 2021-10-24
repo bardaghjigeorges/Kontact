@@ -7,9 +7,12 @@ import com.m2idl.kontact.service.UserCredentialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +27,7 @@ public class UserCredentialController {
     ContactService contactService;
 
     @GetMapping("/home")
-    public ModelAndView findUserOptional(Principal principal){
+    public ModelAndView listContacts(Principal principal){
         System.out.println("current user : "+principal.getName());
         List<Contact> contacts = userCredentialService.getContactsOfUser(principal.getName());
         ModelAndView modelAndView = new ModelAndView("contactsList");
@@ -33,35 +36,37 @@ public class UserCredentialController {
     }
 
     @GetMapping("/contact/edit/{id}")
-    public ModelAndView getContactEdit(@PathVariable(value = "id") int id ){
+    public String getContactEdit(@PathVariable(value = "id") int id , Model model){
         Contact contact = contactService.getContact(id);
-        ModelAndView modelAndView = new ModelAndView("contactEdit");
-        modelAndView.addObject("contact", contact);
-        return modelAndView ;
+        model.addAttribute("contact", contact);
+        return "contactEdit" ;
     }
 
     @PostMapping("/contact/edit/{id}")
-    public ModelAndView putContactEdit(@PathVariable(value = "id") int id, @ModelAttribute("contact") Contact contact) throws Exception {
-        try{
-            contactService.updateContact(contact, id);
-            return new ModelAndView("redirect:/home");
+    public String putContactEdit(@PathVariable(value = "id") int id,@Valid @ModelAttribute("contact") Contact contact, BindingResult errors, Model model, Principal principal) throws Exception {
+
+        if(errors.hasErrors()){
+            model.addAttribute("org.springframework.validation.BindingResult.contact", errors);
+            model.addAttribute("contact", contact);
+            return "contactEdit";
         }
-        catch (Exception e){
-            ModelAndView modelAndView = new ModelAndView("contactEdit");
-            modelAndView.addObject("contact",contact);
-            return modelAndView;
-        }
+        userCredentialService.updateContactToUser(principal.getName(), contact, id);
+        return "redirect:/home";
     }
 
     @PostMapping("contact/add")
-    public String addAContactToUser(Principal principal,@ModelAttribute("contact") Contact contact ){
+    public String addAContactToUser(Principal principal, @Valid @ModelAttribute("contact") Contact contact, BindingResult errors, Model model ){
+        if(errors.hasErrors()){
+            model.addAttribute("org.springframework.validation.BindingResult.contact", errors);
+            model.addAttribute("contact", contact);
+            return "contactAdding";
+        }
         userCredentialService.addContactToUser(principal.getName(), contact);
         return "redirect:/home";
     }
 
     @GetMapping("contact/add")
-    public String addAContactToUser(Principal principal ){
-
+    public String addAContactToUser(){
         return "contactAdding";
     }
 

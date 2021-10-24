@@ -21,11 +21,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/register", "/loginPage").anonymous()
+        http.authorizeRequests().antMatchers("/register", "/loginPage", "/h2-console**/**").anonymous()
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/loginPage").defaultSuccessUrl("/",true)
+                .formLogin().loginPage("/loginPage").defaultSuccessUrl("/", true)
                 .and()
                 .logout()
                 .and()
