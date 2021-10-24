@@ -25,7 +25,6 @@ public class UserCredentialServiceImp implements UserCredentialService {
 
     public UserCredential addUser(UserCredential userCredential) throws Exception {
         if(userExistsByEmail(userCredential.getEmail())) {
-            System.out.println("user already exists");
             throw new Exception();
         }
         userCredential.setPassword(passwordEncoder.encode(userCredential.getPassword()));
