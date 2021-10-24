@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface UserCredentialService {
 
-    UserCredential addUser(UserCredential userCredential);
+    UserCredential addUser(UserCredential userCredential) throws Exception;
 
     UserCredential updateUser(UserCredential userCredential) throws Exception;
 

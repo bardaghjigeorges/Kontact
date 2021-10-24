@@ -5,10 +5,8 @@
 
 <div class="container-sm" style="margin-top: 10px">
 
-    <sec:authorize access="!isAuthenticated()">
-        <a href="/group/${login}" class="btn btn-primary">Se connecter</a>
-    </sec:authorize>
-    <div class="d-flex flex-row flex-wrap justify-content-around">
+
+    <div class="d-flex flex-row flex-wrap justify-content-center container d-flex h-100 mt-5 card-columns w-25">
         <sec:authorize access="isAuthenticated()">
             <c:forEach items="${contacts}" var="contact">
                 <div class="card" style="margin-top: 10px">

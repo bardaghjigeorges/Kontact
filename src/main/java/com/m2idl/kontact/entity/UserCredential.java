@@ -20,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 
 public class UserCredential {
+
     @Id
     String email;
 
