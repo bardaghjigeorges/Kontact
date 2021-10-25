@@ -11,6 +11,7 @@ Cette archive contient :
 	-	email : test@test.fr
 	-	mdp : test
 
--	les diagrammes UML du projet (Class, UseCase, Sequence et Activity)
+-	Les diagrammes UML du projet (Class, UseCase, Sequence et Activity)
+-	Un fichier historique_git.txt contenant le git log du projet.
 
 De plus voici le lien vers le dépot Git du projet : https://github.com/bardaghjigeorges/Kontact
